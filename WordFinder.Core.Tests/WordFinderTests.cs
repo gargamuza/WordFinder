@@ -104,16 +104,87 @@ public class WordFinderTests
         CollectionAssert.AreEqual(expectedMatrix, wordFinder.Matrix, "The 2D matrix content is not as expected.");
     }
 
+    [TestCaseSource(nameof(FindTestCases))]
     [Test]
-    public void Find_ShouldThrowNotImplementedException_WhenCalled()
+    public void Find_ShouldReturnCorrectWords(string[] matrixInput, string[] wordstreamInput, string[] expectedResult)
     {
         // Arrange
-        var matrix = new List<string> { "abcd", "efgh", "ijkl", "mnop" };
+        var matrix = matrixInput.ToList();
+        var wordstream = wordstreamInput.ToList();
         var wordFinder = new WordFinder(matrix);
-        var wordstream = new List<string> { "word1", "word2" };
 
-        // Act & Assert
-        Assert.Throws<NotImplementedException>(() => wordFinder.Find(wordstream),
-            "Find should throw a NotImplementedException.");
+        // Act
+        var results = wordFinder.Find(wordstream).ToList();
+
+        // Assert
+        CollectionAssert.AreEqual(expectedResult, results);
+    }
+
+    private static IEnumerable<TestCaseData> FindTestCases()
+    {
+        // Test Case 1:  Words found horizontally and vertically
+        yield return new TestCaseData(
+            new[] { 
+                "autoabcd", 
+                "bbbbbbbb", 
+                "autoauto", 
+                "zzzzzzzz" 
+            },
+            new[] { "auto", "bbbb", "zzzz", "abcd", "pepe" },
+            new string[] { "auto", "abcd", "bbbb", "zzzz" }
+        );
+
+        // Test Case 2:  Words not found in the matrix
+        yield return new TestCaseData(
+            new[] { 
+                "abcdabcd", 
+                "efghefgh", 
+                "ijklmnop", 
+                "qrstuvwx" 
+            },
+            new[] { "auto", "bbbb", "zzzz" },
+            new string[] { }
+        );
+
+        // Test Case 3: Matrix with less than 10 words found
+        yield return new TestCaseData(
+            new[] { 
+                "autoabcd", 
+                "bbbbbbbb", 
+                "zzzzzzzz" 
+            },
+            new[] { "auto", "bbbb", "zzzz" },
+            new[] { "auto", "bbbb", "zzzz" }
+        );
+
+        // Test Case 4: More than 10 words found, the top 10 are returned
+        yield return new TestCaseData(
+            new[] {
+                "aaaaabcd", 
+                "bbbbbbbb", 
+                "cccccccc", 
+                "dddddddd", 
+                "eeeeeeee",
+                "ffffabcd", 
+                "gggggggg", 
+                "hhhhhhhh", 
+                "iiiiiiii", 
+                "jjjjjjjj", 
+                "kkkkkkkk"
+            },
+            new[] { "aaaa", "bbbb", "cccc", "dddd", "eeee", "ffff", "gggg", "hhhh", "iiii", "jjjj", "kkkk", "abcd", "zzzz" },
+            new[] { "abcd", "aaaa", "bbbb", "cccc", "dddd", "eeee", "ffff", "gggg", "hhhh", "iiii" }
+        );
+
+        // Test Case 5: Ties between words, alphabetical order in ties
+        yield return new TestCaseData(
+            new[] { 
+                "abcdabcd", 
+                "abcdabcd", 
+                "abcdabcd", 
+                "abcdabcd" },
+            new[] { "abcd", "bcda", "cdab", "dabc" },
+            new[] { "abcd", "bcda", "cdab", "dabc" }
+        );
     }
 }
