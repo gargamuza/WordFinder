@@ -3,9 +3,9 @@
     public class WordFinder
     {
         private readonly char[,] _matrix;
-        public int Rows { get; }
-        public int Columns { get; }
-        public char[,] Matrix => (char[,])_matrix.Clone();
+        internal int Rows { get; }
+        internal int Columns { get; }
+        internal char[,] Matrix => (char[,])_matrix.Clone();
 
         public WordFinder(IEnumerable<string> matrix)
         {
@@ -51,7 +51,7 @@
 
             foreach (var word in wordstream)
             {
-                int count = CountOccurrences(word);
+                int count = MatrixHelper.CountOccurrences(_matrix, word);
                 if (count > 0) // We only save words with occurrences
                 {
                     wordCounts[word] = count;
@@ -64,73 +64,6 @@
                 .ThenBy(kvp => kvp.Key)
                 .Take(10)
                 .Select(kvp => kvp.Key); 
-        }
-
-        private int CountOccurrences(string word)
-        {
-            if (string.IsNullOrEmpty(word))
-            {
-                return 0;
-            }
-
-            int count = 0;
-
-            // Horizontal Search (rows)
-            for (int row = 0; row < Rows; row++)
-            {
-                if (SearchInRow(row, word))
-                {
-                    count++;
-                }
-            }
-
-            // Vertical Search (columns)
-            for (int col = 0; col < Columns; col++)
-            {
-                if (SearchInColumn(col, word))
-                {
-                    count++;
-                }
-            }
-
-            return count;
-        }
-
-        private bool SearchInRow(int row, string word)
-        {
-            for (int col = 0; col <= Columns - word.Length; col++)
-            {
-                if (MatchInMatrix(row, col, word, isHorizontal: true))
-                {
-                    return true; // Count only once per row
-                }
-            }
-            return false;
-        }
-
-        private bool SearchInColumn(int col, string word)
-        {
-            for (int row = 0; row <= Rows - word.Length; row++)
-            {
-                if (MatchInMatrix(row, col, word, isHorizontal: false))
-                {
-                    return true; // Count only once per column
-                }
-            }
-            return false;
-        }
-
-        private bool MatchInMatrix(int row, int col, string word, bool isHorizontal)
-        {
-            for (int i = 0; i < word.Length; i++)
-            {
-                char current = isHorizontal ? _matrix[row, col + i] : _matrix[row + i, col];
-                if (current != word[i])
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }
