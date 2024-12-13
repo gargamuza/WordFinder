@@ -2,12 +2,7 @@ namespace WordFinder.Core.Tests;
 
 [TestFixture]
 public class WordFinderTests
-{
-    [SetUp]
-    public void Setup()
-    {
-    }
-
+{   
     [Test]
     public void Constructor_ShouldInitializeProperly_WhenMatrixIsValid()
     {
