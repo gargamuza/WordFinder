@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Core", "WordFind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Core.Tests", "WordFinder.Core.Tests\WordFinder.Core.Tests.csproj", "{C29EABE8-DB8F-427A-9EED-D6E563B11E45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Benchmark", "WordCountBenchmark\WordFinder.Benchmark.csproj", "{3D73EF06-FDE5-4173-9A79-FA69982E0232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Benchmark", "WordFinder.Benchmark\WordFinder.Benchmark.csproj", "{3D73EF06-FDE5-4173-9A79-FA69982E0232}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinder.Tools", "WordFinder.Tools\WordFinder.Tools.csproj", "{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}"
 EndProject
