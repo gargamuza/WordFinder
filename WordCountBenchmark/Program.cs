@@ -6,7 +6,7 @@ namespace WordCountBenchmark
     {
         static void Main(string[] args)
         {         
-            BenchmarkRunner.Run<WordCountBenchmark>();
+            BenchmarkRunner.Run<WordFinderBenchmark>();
         }
     }
 }

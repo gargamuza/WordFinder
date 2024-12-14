@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Core", "WordFind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Core.Tests", "WordFinder.Core.Tests\WordFinder.Core.Tests.csproj", "{C29EABE8-DB8F-427A-9EED-D6E563B11E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCountBenchmark", "WordCountBenchmark\WordCountBenchmark.csproj", "{3D73EF06-FDE5-4173-9A79-FA69982E0232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordFinder.Benchmark", "WordCountBenchmark\WordFinder.Benchmark.csproj", "{3D73EF06-FDE5-4173-9A79-FA69982E0232}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinder.Tools", "WordFinder.Tools\WordFinder.Tools.csproj", "{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordFinder.Console", "WordFinder.Console\WordFinder.Console.csproj", "{C02D31B1-1B20-4BEB-8B73-3D607BAE7F71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{3D73EF06-FDE5-4173-9A79-FA69982E0232}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D73EF06-FDE5-4173-9A79-FA69982E0232}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D73EF06-FDE5-4173-9A79-FA69982E0232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{402DFE67-3E34-4B65-A0A7-04FEFFDB18EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C02D31B1-1B20-4BEB-8B73-3D607BAE7F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C02D31B1-1B20-4BEB-8B73-3D607BAE7F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C02D31B1-1B20-4BEB-8B73-3D607BAE7F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C02D31B1-1B20-4BEB-8B73-3D607BAE7F71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
