@@ -1,15 +1,15 @@
 ﻿using System.Text;
 
-namespace WordCountBenchmark
+namespace WordFinder.Tools
 {
-    internal class WordGenerator
+    public class MatrixGenerator
     {
-        internal static List<string> validWords = new List<string>
+        public List<string> ValidWords = new List<string>
         {
             "apple", "banana", "orange", "grape", "cherry", "peach", "melon", "berry", "kiwi", "lemon"
         };
 
-        public static List<string> GenerateWords(int rows, int columns, int maxInsertions)
+        public List<string> Generate(int rows, int columns, int maxInsertions)
         {
             var random = new Random();
             var matrix = new char[rows, columns];
@@ -25,16 +25,26 @@ namespace WordCountBenchmark
 
             // Insert valid words at random
             for (int i = 0; i < maxInsertions; i++)
-            {               
-                string validWord = validWords[random.Next(validWords.Count)];
+            {
+                string validWord = ValidWords[random.Next(ValidWords.Count)];
                 bool placed = false;
 
-                while (!placed)
-                {                   
+                int attempts = 0;
+                const int maxAttempts = 100;
+
+                while (!placed && attempts < maxAttempts)
+                {
+                    attempts++;
                     bool placeHorizontally = random.Next(0, 2) == 0;
 
                     if (placeHorizontally)
                     {
+                        if (validWord.Length > columns)
+                        {
+                            // It is not possible to place horizontally                         
+                            break;
+                        }
+
                         // Try to place horizontally
                         int startRow = random.Next(0, rows);
                         int startCol = random.Next(0, columns - validWord.Length + 1);
@@ -49,7 +59,7 @@ namespace WordCountBenchmark
                                 break;
                             }
                         }
-                      
+
                         if (canPlace)
                         {
                             for (int k = 0; k < validWord.Length; k++)
@@ -61,6 +71,12 @@ namespace WordCountBenchmark
                     }
                     else
                     {
+                        if (validWord.Length > rows)
+                        {
+                            // It is not possible to place vertically                          
+                            break;
+                        }
+
                         // Try to place vertically
                         int startRow = random.Next(0, rows - validWord.Length + 1);
                         int startCol = random.Next(0, columns);
@@ -75,7 +91,7 @@ namespace WordCountBenchmark
                                 break;
                             }
                         }
-                       
+
                         if (canPlace)
                         {
                             for (int k = 0; k < validWord.Length; k++)
@@ -93,7 +109,7 @@ namespace WordCountBenchmark
             {
                 for (int col = 0; col < columns; col++)
                 {
-                    if (matrix[row, col] == ' ') 
+                    if (matrix[row, col] == ' ')
                     {
                         matrix[row, col] = (char)random.Next('a', 'z' + 1);
                     }

@@ -1,4 +1,6 @@
-﻿namespace WordFinder.Core
+﻿using System.Collections.Concurrent;
+
+namespace WordFinder.Core
 {
     public class WordFinder
     {
@@ -30,8 +32,7 @@
             {
                 throw new ArgumentException("All rows in the matrix must have the same length.");
             }
-
-            // Initialize and populate the 2D matrix
+          
             _matrix = new char[Rows, Columns];
             int rowIndex = 0;
             foreach (var row in matrix)
@@ -45,25 +46,30 @@
         }
         
         public IEnumerable<string> Find(IEnumerable<string> wordstream)
-        {
-            //Dictionary to store the occurrences of each word
-            var wordCounts = new Dictionary<string, int>();
+        {          
+            var wordCounts = new ConcurrentDictionary<string, int>();
 
-            foreach (var word in wordstream)
+            // Filter words that are too long to fit in the matrix
+            var filteredWords = wordstream.Where(word => word.Length <= Rows || word.Length <= Columns);
+
+            // Remove duplicates
+            var uniqueWords = new HashSet<string>(filteredWords);
+            
+            Parallel.ForEach(uniqueWords, word =>
             {
                 int count = MatrixHelper.CountOccurrences(_matrix, word);
                 if (count > 0) // We only save words with occurrences
                 {
-                    wordCounts[word] = count;
+                    wordCounts.TryAdd(word, count);
                 }
-            }
+            });
 
-            // Sort by the number of occurrences in descending order and take the first 10            
+            // Sort by the number of occurrences in descending order and take the first 10      
             return wordCounts
                 .OrderByDescending(kvp => kvp.Value)
                 .ThenBy(kvp => kvp.Key)
                 .Take(10)
-                .Select(kvp => kvp.Key); 
+                .Select(kvp => kvp.Key);
         }
     }
 }
